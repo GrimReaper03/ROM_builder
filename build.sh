@@ -6,11 +6,14 @@ cd /tmp/rom
 git config --global user.name GeoPD
 git config --global user.email geoemmanuelpd2001@gmail.com
 
+echo "${GIT_COOKIES}" > ~/gitcookies.sh
+bash ~/gitcookies.sh
+
 export rom=dotOS-R
 
 rom_one(){
  repo init --no-repo-verify -u git://github.com/DotOS/manifest.git -b dot11 -g default,-device,-mips,-darwin,-notdefault
- repo sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j16
+ schedtool -B -n 1 -e ionice -n 1 "$(which repo)" sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j"$(($(nproc --all) + 1))"
  git clone https://$TOKEN@github.com/geopd/device_xiaomi_sakura_TEST.git -b dot-11 device/xiaomi/sakura
  git clone https://$TOKEN@github.com/geopd/vendor_xiaomi_sakura_TEST.git -b lineage-18.0 vendor/xiaomi
  . build/envsetup.sh && lunch dot_sakura-userdebug
@@ -18,7 +21,7 @@ rom_one(){
 
 rom_two(){
  repo init --no-repo-verify -u https://github.com/Evolution-X/manifest -b elle -g default,-device,-mips,-darwin,-notdefault
- repo sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j16
+ schedtool -B -n 1 -e ionice -n 1 "$(which repo)" sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j"$(($(nproc --all) + 1))"
  git clone https://$TOKEN@github.com/geopd/device_xiaomi_sakura_TEST.git -b elle device/xiaomi/sakura
  git clone https://$TOKEN@github.com/geopd/vendor_xiaomi_sakura_TEST.git -b lineage-18.0 vendor/xiaomi
  rm -rf vendor/gms && git clone https://gitlab.com/geopdgitlab/vendor_gapps -b eleven vendor/gms
@@ -27,7 +30,7 @@ rom_two(){
 
 rom_three(){
  repo init --no-repo-verify -u git://github.com/DotOS/manifest.git -b dot11 -g default,-device,-mips,-darwin,-notdefault
- repo sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j16
+ schedtool -B -n 1 -e ionice -n 1 "$(which repo)" sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j"$(($(nproc --all) + 1))"
  git clone https://$TOKEN@github.com/geopd/device_xiaomi_sakura_TEST.git -b dot-R device/xiaomi/sakura
  git clone https://$TOKEN@github.com/geopd/vendor_xiaomi_sakura_TEST.git -b lineage-18.1 vendor/xiaomi
  rm -rf hardware/qcom-caf/msm8996/audio hardware/qcom-caf/msm8996/display hardware/qcom-caf/msm8996/media
@@ -71,11 +74,11 @@ ccache -M 20G && ccache -o compression=true && ccache -z
 make api-stubs-docs && make system-api-stubs-docs && make test-api-stubs-docs
 
 case "$rom" in
- "dotOS") make bacon -j20
+ "dotOS") make bacon -j$(nproc --all)
     ;;
- "EvolutionX") mka bacon -j20
+ "EvolutionX") mka bacon -j$(nproc --all)
     ;;
- "dotOS-R") make bacon -j20
+ "dotOS-R") make bacon -j$(nproc --all)
     ;;
  *) echo "Invalid option!"
     exit 1
