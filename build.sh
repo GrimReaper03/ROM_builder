@@ -3,53 +3,32 @@
 mkdir -p /tmp/rom
 cd /tmp/rom
 
-git config --global user.name GeoPD
-git config --global user.email geoemmanuelpd2001@gmail.com
+git config --global user.name AlexThundrous
+git config --global user.email alexthundrous2104@gmail.com
 
 echo "${GIT_COOKIES}" > ~/gitcookies.sh
 bash ~/gitcookies.sh
 
-export rom=dotOS-R
+export rom=bootleggers
 
 rom_one(){
- repo init --no-repo-verify -u git://github.com/DotOS/manifest.git -b dot11 -g default,-device,-mips,-darwin,-notdefault
- schedtool -B -n 1 -e ionice -n 1 "$(which repo)" sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j"$(($(nproc --all) + 1))"
- git clone https://$TOKEN@github.com/geopd/device_xiaomi_sakura_TEST.git -b dot-11 device/xiaomi/sakura
- git clone https://$TOKEN@github.com/geopd/vendor_xiaomi_sakura_TEST.git -b lineage-18.0 vendor/xiaomi
- . build/envsetup.sh && lunch dot_sakura-userdebug
-}
-
-rom_two(){
- repo init --no-repo-verify -u https://github.com/Evolution-X/manifest -b elle -g default,-device,-mips,-darwin,-notdefault
- schedtool -B -n 1 -e ionice -n 1 "$(which repo)" sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j"$(($(nproc --all) + 1))"
- git clone https://$TOKEN@github.com/geopd/device_xiaomi_sakura_TEST.git -b elle device/xiaomi/sakura
- git clone https://$TOKEN@github.com/geopd/vendor_xiaomi_sakura_TEST.git -b lineage-18.0 vendor/xiaomi
- rm -rf vendor/gms && git clone https://gitlab.com/geopdgitlab/vendor_gapps -b eleven vendor/gms
- . build/envsetup.sh && lunch evolution_sakura-userdebug
-}
-
-rom_three(){
- repo init --no-repo-verify -u git://github.com/DotOS/manifest.git -b dot11 -g default,-device,-mips,-darwin,-notdefault
- schedtool -B -n 1 -e ionice -n 1 "$(which repo)" sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j"$(($(nproc --all) + 1))"
- git clone https://$TOKEN@github.com/geopd/device_xiaomi_sakura_TEST.git -b dot-R device/xiaomi/sakura
- git clone https://$TOKEN@github.com/geopd/vendor_xiaomi_sakura_TEST.git -b lineage-18.1 vendor/xiaomi
- rm -rf hardware/qcom-caf/msm8996/audio hardware/qcom-caf/msm8996/display hardware/qcom-caf/msm8996/media
+ repo init --no-repo-verify -u git://github.com/Bootleggers-brokenlab/manifest.git -b rimbon -g default,-device,-mips,-darwin,-notdefault
+ repo sync --no-tags --no-clone-bundle --force-sync --optimized-fetch -j16
+ git clone https://github.com/AlexThundrous/device_xiaomi_sakura.git -b bootleg device/xiaomi/sakura
+ git clone https://github.com/AlexThundrous/vendor_xiaomi_sakura.git -b 11 vendor/xiaomi
+  rm -rf hardware/qcom-caf/msm8996/audio hardware/qcom-caf/msm8996/display hardware/qcom-caf/msm8996/media
  git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_audio -b 11.0 hardware/qcom-caf/msm8996/audio
  git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_display -b 11.0 hardware/qcom-caf/msm8996/display
  git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_media -b 11.0 hardware/qcom-caf/msm8996/media
- . build/envsetup.sh && lunch dot_sakura-userdebug
+ . build/envsetup.sh && lunch bootleg_sakura-userdebug
 }
 
-git clone https://$TOKEN@github.com/geopd/kernel_xiaomi_msm8953 -b beta-4.9-Q kernel/xiaomi/msm8953 
+git clone https://$TOKEN@github.com/AlexThundrous/revvz -b beta-4.9-Q kernel/xiaomi/msm8953 
 git clone https://github.com/geopd/vendor_custom_prebuilts -b master vendor/custom/prebuilts
 git clone https://github.com/mvaisakh/gcc-arm64.git -b gcc-master prebuilts/gcc/linux-x86/aarch64/aarch64-elf
 
 case "$rom" in
- "dotOS") rom_one
-    ;;
- "EvolutionX") rom_two
-    ;;
- "dotOS-R") rom_three
+ "bootleggers") rom_one
     ;;
  *) echo "Invalid option!"
     exit 1
@@ -74,11 +53,7 @@ ccache -M 20G && ccache -o compression=true && ccache -z
 make api-stubs-docs && make system-api-stubs-docs && make test-api-stubs-docs
 
 case "$rom" in
- "dotOS") make bacon -j$(nproc --all)
-    ;;
- "EvolutionX") mka bacon -j$(nproc --all)
-    ;;
- "dotOS-R") make bacon -j$(nproc --all)
+ "bootleggers") mka bacon -j20
     ;;
  *) echo "Invalid option!"
     exit 1
