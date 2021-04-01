@@ -40,6 +40,8 @@ git clone https://github.com/darkhz/revvz_sakura -b beta-4.9-Q kernel/xiaomi/msm
 git clone https://github.com/geopd/vendor_custom_prebuilts -b master vendor/custom/prebuilts
 git clone https://github.com/mvaisakh/gcc-arm64.git -b gcc-master prebuilts/gcc/linux-x86/aarch64/aarch64-elf
 
+sed -i 's/ccache //g' kernel/xiaomi/msm8953/Makefile
+
 case "$rom" in
  "bootleggers") rom_one
     ;;
