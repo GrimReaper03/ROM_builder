@@ -9,8 +9,8 @@ env:
 task:
   container:
     image: geopd/builder:update
-    cpu: 16
-    memory: 24G
+    cpu: 8
+    memory: 32G
 
   name: rom
   timeout_in: 120m
