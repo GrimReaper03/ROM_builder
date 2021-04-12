@@ -20,6 +20,7 @@ rom_one(){
  git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_audio -b 11.0 hardware/qcom-caf/msm8996/audio
  git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_display -b 11.0 hardware/qcom-caf/msm8996/display
  git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_media -b 11.0 hardware/qcom-caf/msm8996/media
+ cd build/soong && git remote add -f los https://github.com/LineageOS/android_build_soong && git cherry-pick fa55b7ca14307218264487ca85e30cfa5b987a1c
  . build/envsetup.sh && lunch bootleg_sakura-userdebug
 }
 
