@@ -9,7 +9,7 @@ git config --global user.email alexthundrous2104@gmail.com
 echo "${GIT_COOKIES}" > ~/gitcookies.sh
 bash ~/gitcookies.sh
 
-export rom=project-sakura
+export rom=bootleggers
 
 rom_one(){
  repo init --no-repo-verify -u git://github.com/Bootleggers-brokenlab/manifest.git -b rimbon -g default,-device,-mips,-darwin,-notdefault
@@ -23,19 +23,6 @@ rom_one(){
  . build/envsetup.sh && lunch bootleg_sakura-userdebug
 }
 
-rom_two(){
-repo init --no-repo-verify -u git://github.com/ProjectSakura/android.git -b 11 -g default,-device,-mips,-darwin,-notdefault
-repo sync --no-tags --no-clone-bundle --force-sync --optimized-fetch -j16
- git clone https://github.com/AlexThundrous/device_xiaomi_sakura.git -b lineage device/xiaomi/sakura
- git clone https://github.com/AlexThundrous/vendor_xiaomi_sakura.git -b 11 vendor/xiaomi
-  rm -rf hardware/qcom-caf/msm8996/audio hardware/qcom-caf/msm8996/display hardware/qcom-caf/msm8996/media
- git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_audio -b 11.0 hardware/qcom-caf/msm8996/audio
- git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_display -b 11.0 hardware/qcom-caf/msm8996/display
- git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_media -b 11.0 hardware/qcom-caf/msm8996/media
- git clone https://$TOKEN@github.com/Sakura-Devices/vendor_sakura-priv vendor/sakura-priv
- . build/envsetup.sh && lunch lineage_sakura-userdebug
-}
-
 git clone https://github.com/darkhz/revvz_sakura -b beta-4.9-Q kernel/xiaomi/msm8953 
 git clone https://github.com/geopd/vendor_custom_prebuilts -b master vendor/custom/prebuilts
 git clone https://github.com/mvaisakh/gcc-arm64.git -b gcc-master prebuilts/gcc/linux-x86/aarch64/aarch64-elf
@@ -45,9 +32,7 @@ sed -i 's/ccache //g' kernel/xiaomi/msm8953/Makefile
 case "$rom" in
  "bootleggers") rom_one
     ;;
- "project-sakura") rom_two
-    ;;  
- *) echo "Invalid option!"
+*) echo "Invalid option!"
     exit 1
     ;;
 esac
@@ -70,9 +55,7 @@ ccache -M 20G && ccache -o compression=true && ccache -z
 make api-stubs-docs && make system-api-stubs-docs && make test-api-stubs-docs
 
 case "$rom" in
- "bootleggers") mka bacon -j20
-    ;;
- "project-sakura") make bacon -j20 
+ "bootleggers") mka bacon -j20 
     ;;  
  *) echo "Invalid option!"
     exit 1
