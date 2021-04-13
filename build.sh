@@ -59,7 +59,7 @@ ccache -M 20G && ccache -o compression=true && ccache -z
 make api-stubs-docs && make system-api-stubs-docs && make test-api-stubs-docs
 
 case "$rom" in
- "bootleggers") mka bacon -j10
+ "bootleggers") mka bacon -j20
     ;;  
  *) echo "Invalid option!"
     exit 1
