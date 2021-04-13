@@ -13,7 +13,7 @@ export rom=bootleggers
 
 rom_one(){
  repo init --no-repo-verify -u git://github.com/Bootleggers-brokenlab/manifest.git -b rimbon -g default,-device,-mips,-darwin,-notdefault
- repo sync --no-tags --no-clone-bundle --force-sync --optimized-fetch -j16
+ repo sync --no-tags --no-clone-bundle --force-sync --optimized-fetch -j30
  git clone https://github.com/AlexThundrous/device_xiaomi_sakura.git -b bootleg device/xiaomi/sakura
  git clone https://github.com/AlexThundrous/vendor_xiaomi_sakura.git -b 11 vendor/xiaomi
   rm -rf hardware/qcom-caf/msm8996/audio hardware/qcom-caf/msm8996/display hardware/qcom-caf/msm8996/media
@@ -59,7 +59,7 @@ ccache -M 20G && ccache -o compression=true && ccache -z
 make api-stubs-docs && make system-api-stubs-docs && make test-api-stubs-docs
 
 case "$rom" in
- "bootleggers") mka bacon -j20 
+ "bootleggers") mka bacon -j10
     ;;  
  *) echo "Invalid option!"
     exit 1
