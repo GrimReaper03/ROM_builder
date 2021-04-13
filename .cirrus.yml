@@ -1,7 +1,7 @@
 env:
     CIRRUS_CLONE_DEPTH: 1
     CIRRUS_WORKING_DIR: "/tmp/ci"
-    rclone_config: "ENCRYPTED[df8d1ac8a793a09557c50fc8fb0acbdbbe975935427460e8e427716e395b43e526ca52ff20f52a421b7dc1dd598421ae]"
+    rclone_config: ENCRYPTED[24afba1b4ea186b340d0a1bd1d39614853782dcd42c0bd5c0867a5724e49da08a424406bdaf401340a2d4dbb1b076d40]
     TOKEN: "ENCRYPTED[adfb162a64eb8267f92771edea5e4db57d01360b71049f94b33aa4af892042d9e228a0a3d6d85aabd1f64d4ac0ab995b]"
     CHATID: "ENCRYPTED[9122236190b50c7cfa962cf071053baeb4500a6cfa070db7995b426efd0959b846363b7f2c67063fa08660a77073a3e2]"
     BOTTOKEN: "ENCRYPTED[697b0e148de1c5d198ccdd353bb32ad92f99828e5443e7ad514e3926c027d5d42e22f8faa73e3ba44b0c2021f891bce9]"
@@ -17,10 +17,10 @@ task:
   download_ccache_background_script:
       - cd /tmp && mkdir -p ~/.config/rclone
       - echo "$rclone_config" > ~/.config/rclone/rclone.conf
-      - rclone copy AleX:/rom/ccache/ccache.tar.gz /tmp -P && tar xf ccache.tar.gz
+      - rclone copy Alex:/rom/ccache/ccache.tar.gz /tmp -P && tar xf ccache.tar.gz
   build_script:
       - bash build.sh
     
   upload_ccache_script:
       - cd /tmp && tar --use-compress-program="pigz -k -1 " -cf ccache.tar.gz ccache
-      - rclone copy ccache.tar.gz AleX:/rom/ccache -P
+      - rclone copy ccache.tar.gz Alex:/rom/ccache -P
