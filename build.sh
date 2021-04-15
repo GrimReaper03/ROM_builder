@@ -6,8 +6,8 @@ cd /tmp/rom
 git config --global user.name AlexThundrous
 git config --global user.email alexthundrous2104@gmail.com
 
-#echo "${GIT_COOKIES}" > ~/gitcookies.sh
-#bash ~/gitcookies.sh
+echo "${GIT_COOKIES}" > ~/gitcookies.sh
+bash ~/gitcookies.sh
 
 export rom=bootleggers
 
@@ -17,7 +17,7 @@ rom_one(){
  git clone --depth=1 https://github.com/AlexThundrous/device_xiaomi_sakura.git -b bootleg device/xiaomi/sakura
  git clone --depth=1 https://github.com/AlexThundrous/vendor_xiaomi_sakura.git -b 11 vendor/xiaomi
   rm -rf hardware/qcom-caf/msm8996/audio hardware/qcom-caf/msm8996/display hardware/qcom-caf/msm8996/media
- git clone --depth=1https://github.com/Jabiyeff-Project/android_hardware_qcom_audio -b 11.0 hardware/qcom-caf/msm8996/audio
+ git clone --depth=1 https://github.com/Jabiyeff-Project/android_hardware_qcom_audio -b 11.0 hardware/qcom-caf/msm8996/audio
  git clone --depth=1 https://github.com/Jabiyeff-Project/android_hardware_qcom_display -b 11.0 hardware/qcom-caf/msm8996/display
  git clone --depth=1 https://github.com/Jabiyeff-Project/android_hardware_qcom_media -b 11.0 hardware/qcom-caf/msm8996/media
  rm -rf vendor/qcom/opensource/power && git clone https://github.com/PixelExperience/vendor_qcom_opensource_power vendor/qcom/opensource/power
@@ -56,7 +56,7 @@ export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
 ccache -M 50G && ccache -o compression=true && ccache -z
-#make api-stubs-docs && make system-api-stubs-docs && make test-api-stubs-docs
+make api-stubs-docs && make system-api-stubs-docs && make test-api-stubs-docs
 
 case "$rom" in
  "bootleggers") mka bacon -j18
