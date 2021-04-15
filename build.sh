@@ -6,20 +6,20 @@ cd /tmp/rom
 git config --global user.name AlexThundrous
 git config --global user.email alexthundrous2104@gmail.com
 
-echo "${GIT_COOKIES}" > ~/gitcookies.sh
-bash ~/gitcookies.sh
+#echo "${GIT_COOKIES}" > ~/gitcookies.sh
+#bash ~/gitcookies.sh
 
 export rom=bootleggers
 
 rom_one(){
  repo init --no-repo-verify -u git://github.com/Bootleggers-brokenlab/manifest.git -b rimbon -g default,-device,-mips,-darwin,-notdefault
  repo sync --no-tags --no-clone-bundle --force-sync --optimized-fetch -j30
- git clone https://github.com/AlexThundrous/device_xiaomi_sakura.git -b bootleg device/xiaomi/sakura
- git clone https://github.com/AlexThundrous/vendor_xiaomi_sakura.git -b 11 vendor/xiaomi
+ git clone --depth=1 https://github.com/AlexThundrous/device_xiaomi_sakura.git -b bootleg device/xiaomi/sakura
+ git clone --depth=1 https://github.com/AlexThundrous/vendor_xiaomi_sakura.git -b 11 vendor/xiaomi
   rm -rf hardware/qcom-caf/msm8996/audio hardware/qcom-caf/msm8996/display hardware/qcom-caf/msm8996/media
- git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_audio -b 11.0 hardware/qcom-caf/msm8996/audio
- git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_display -b 11.0 hardware/qcom-caf/msm8996/display
- git clone https://github.com/Jabiyeff-Project/android_hardware_qcom_media -b 11.0 hardware/qcom-caf/msm8996/media
+ git clone --depth=1https://github.com/Jabiyeff-Project/android_hardware_qcom_audio -b 11.0 hardware/qcom-caf/msm8996/audio
+ git clone --depth=1 https://github.com/Jabiyeff-Project/android_hardware_qcom_display -b 11.0 hardware/qcom-caf/msm8996/display
+ git clone --depth=1 https://github.com/Jabiyeff-Project/android_hardware_qcom_media -b 11.0 hardware/qcom-caf/msm8996/media
  rm -rf vendor/qcom/opensource/power && git clone https://github.com/PixelExperience/vendor_qcom_opensource_power vendor/qcom/opensource/power
   . build/envsetup.sh
  #cd build/soong && git remote add -f los https://github.com/LineageOS/android_build_soong && git cherry-pick fa55b7ca14307218264487ca85e30cfa5b987a1c 
@@ -27,9 +27,9 @@ rom_one(){
  croot && lunch bootleg_sakura-userdebug
 }
 
-git clone https://github.com/darkhz/revvz_sakura -b beta-4.9-Q kernel/xiaomi/msm8953 
-git clone https://github.com/geopd/vendor_custom_prebuilts -b master vendor/custom/prebuilts
-git clone https://github.com/mvaisakh/gcc-arm64.git -b gcc-master prebuilts/gcc/linux-x86/aarch64/aarch64-elf
+git clone --depth=1 https://github.com/darkhz/revvz_sakura -b beta-4.9-Q kernel/xiaomi/msm8953 
+git clone --depth=1 https://github.com/geopd/vendor_custom_prebuilts -b master vendor/custom/prebuilts
+git clone --depth=1 https://github.com/mvaisakh/gcc-arm64.git -b gcc-master prebuilts/gcc/linux-x86/aarch64/aarch64-elf
 
 sed -i 's/ccache //g' kernel/xiaomi/msm8953/Makefile
 
@@ -55,11 +55,11 @@ telegram_message "<b>🌟 $rom Build Triggered 🌟</b>%0A%0A<b>Date: </b><code>
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
-ccache -M 20G && ccache -o compression=true && ccache -z
-make api-stubs-docs && make system-api-stubs-docs && make test-api-stubs-docs
+ccache -M 50G && ccache -o compression=true && ccache -z
+#make api-stubs-docs && make system-api-stubs-docs && make test-api-stubs-docs
 
 case "$rom" in
- "bootleggers") mka bacon -j20
+ "bootleggers") mka bacon -j18
     ;;  
  *) echo "Invalid option!"
     exit 1

@@ -18,6 +18,9 @@ task:
       - cd /tmp && mkdir -p ~/.config/rclone
       - echo "$rclone_config" > ~/.config/rclone/rclone.conf
       - rclone copy Alex:/rom/ccache/ccache.tar.gz /tmp -P && tar xf ccache.tar.gz
+  upload_ccache_background_script:
+      - cd /tmp
+      - while true; do sleep 95m; tar --use-compress-program="pigz -k -1 " -cf  ccache.tar.gz ccache; rclone copy ccache.tar.gz Alex:ccache/$rom -P; rm ccache.tar.gz; done
   build_script:
       - bash build.sh
     
