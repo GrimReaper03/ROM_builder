@@ -12,7 +12,7 @@ task:
     cpu: 8
     memory: 32G
 
-  name: rom
+  name: custom_rom
   timeout_in: 120m
   download_ccache_background_script:
       - cd /tmp && mkdir -p ~/.config/rclone
